@@ -15,50 +15,204 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Kenya Malaria Project</h1>
-        <p>Amy Chen, David Ma, Mark Martinez</p>
-        <p class="view"><a href="#part-a">Part A</a></p>
+        
+        <h1 id="sidebar">Kenya Malaria Project</h1>
+        <!-- <h2 id="sidebar">Kenya Malaria Project</h2> -->
+          <p>Amy Chen, David Ma, Mark Martinez</p>
+          <!-- <img src="images/kenya-map.png" width="124"> -->
 
-        <p class="view"><a href="https://github.com/kenyamalaria">View My GitHub Profile</a></p>
+        <p class="view">
+          <a href="#data">Data</a> {
+          <a href="#data-survey">Survey</a> |
+          <a href="#data-weather">Weather</a> |
+          <a href="#data-mobility">Mobility</a> }         
+        </p>
+
+        <p class="view">
+          <a href="#regression">Regression</a> {
+          <a href="#regression-model">Model</a> |
+          <a href="#regression-results">Results</a> }
+        </p>
+
+
+        <p class="view">
+          <a href="#pagerank">PageRank</a> {
+          <a href="#pagerank-ratio">Ratio</a> |
+          <a href="#pagerank-difference">Difference</a>}
+        </p>
+
 
       </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+      <section>
+        <h2 id="introduction">Introduction</h2>
+
+        <h2 id="data">Data</h2>
+          <img src="images/Kenya_Census_Map.png">
+
+          <h3 id="data-survey">Data: Survey</h3>
+            <p>
+              Key variables include:
+              <ul>
+                <li>Number examined</li>
+                <li>Number positive</li>
+                <li>Month start, month end</li>
+                <li>Latitude, Longitude</li>
+              </ul>
+            </p>
+
+            <p>
+              <img src="images/surveys_per_district.png">
+              <hr class="soften">
+              <img src="images/examined_per_district.png">
+            </p>
+
+            <!-- <img src="images/Single_Month_Studies.png"> -->
+            <!-- <img src="images/Single_Month_Studies.png"> -->
+            <!-- <img src="images/Single_Month_Study_All_Districts.png"> -->
+            <!-- <img src="images/Month_District_Month_Studies.png"> -->
+
+        <!-- <img src="images/Kilifi_Map.png"> -->
+
+        <h2 id="regression">Regression</h2>
+        <h3 id="regression-model">Regression: Model</h3>
+        <h3 id="regression-results">Regression: Results</h3>
+<pre><code>> summary(mylogit)
+
+Call:
+glm(formula = Positive ~ Precipitation + Temperature + District, 
+    family = "binomial", data = simulated)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.8934  -0.7584  -0.4352  -0.0002   3.4891  
+
+Coefficients:
+                        Estimate Std. Error z value Pr(>|z|)    
+(Intercept)           -4.071e+01  3.191e+00 -12.757  < 2e-16 ***
+Precipitation         -8.149e+03  1.684e+03  -4.840 1.30e-06 ***
+Temperature            1.270e-01  1.071e-02  11.862  < 2e-16 ***
+DistrictBONDO          3.317e+00  1.432e-01  23.162  < 2e-16 ***
+DistrictBUNGOMA        3.471e+00  1.345e-01  25.804  < 2e-16 ***
+DistrictBURET         -1.683e+00  1.017e+00  -1.654 0.098056 .  
+DistrictBUSIA          4.733e+00  1.398e-01  33.846  < 2e-16 ***
+DistrictBUTERE/MUMIAS  3.031e+00  1.605e-01  18.887  < 2e-16 ***
+DistrictCENTRAL KISII  2.064e+00  1.869e-01  11.045  < 2e-16 ***
+DistrictEMBU          -9.550e-01  5.967e-01  -1.601 0.109455    
+DistrictGUCHA          2.984e+00  2.183e-01  13.669  < 2e-16 ***
+DistrictHOMA BAY       2.939e+00  1.981e-01  14.837  < 2e-16 ***
+DistrictKAKAMEGA       2.997e+00  1.410e-01  21.251  < 2e-16 ***
+DistrictKEIYO         -1.375e+01  2.181e+02  -0.063 0.949742    
+DistrictKERICHO        2.985e+00  1.545e-01  19.324  < 2e-16 ***
+DistrictKIAMBU        -1.352e+01  2.184e+02  -0.062 0.950645    
+DistrictKILIFI         1.643e+00  1.141e-01  14.396  < 2e-16 ***
+DistrictKIRINYAGA      1.929e-01  1.915e-01   1.007 0.313869    
+DistrictKISUMU         4.125e+00  1.443e-01  28.592  < 2e-16 ***
+DistrictKITUI          1.042e+00  1.666e-01   6.251 4.07e-10 ***
+DistrictKOIBATEK      -3.081e-01  3.279e-01  -0.940 0.347454    
+DistrictKWALE          1.762e+00  1.198e-01  14.714  < 2e-16 ***
+DistrictLAIKIPIA      -1.433e+01  2.728e+02  -0.053 0.958098    
+DistrictLAMU          -2.002e+00  3.374e-01  -5.934 2.96e-09 ***
+DistrictLUGARI         1.475e+00  2.167e-01   6.805 1.01e-11 ***
+DistrictMACHAKOS      -1.424e+01  1.883e+02  -0.076 0.939747    
+DistrictMAKUENI       -3.436e-01  2.145e-01  -1.602 0.109232    
+DistrictMALINDI        4.784e-01  1.278e-01   3.744 0.000181 ***
+DistrictMARAGUA       -1.416e+01  1.625e+02  -0.087 0.930537    
+DistrictMARAKWET      -1.393e+01  2.178e+02  -0.064 0.949007    
+DistrictMBEERE        -1.418e+01  2.161e+02  -0.066 0.947683    
+DistrictMERU CENTRAL   6.041e-01  1.736e-01   3.480 0.000501 ***
+DistrictMERU SOUTH    -1.439e+01  2.917e+02  -0.049 0.960657    
+DistrictMOMBASA        7.360e-01  1.560e-01   4.717 2.39e-06 ***
+DistrictMT ELGON       1.150e+00  2.508e-01   4.587 4.49e-06 ***
+DistrictMURANGA       -1.400e+01  2.645e+02  -0.053 0.957786    
+DistrictMWINGI        -2.558e+00  1.009e+00  -2.536 0.011220 *  
+DistrictNAIROBI       -1.372e+00  2.687e-01  -5.106 3.30e-07 ***
+DistrictNAKURU        -7.105e-01  3.837e-01  -1.852 0.064052 .  
+DistrictNANDI         -9.921e-01  4.326e-01  -2.293 0.021833 *  
+DistrictNYAMIRA       -1.377e+01  1.915e+02  -0.072 0.942654    
+DistrictNYANDARUA      1.840e-01  3.326e-01   0.553 0.580198    
+DistrictNYANDO         4.476e+00  1.762e-01  25.404  < 2e-16 ***
+DistrictNYERI         -1.360e+01  1.534e+02  -0.089 0.929341    
+DistrictRACHUONYO      2.001e+00  1.887e-01  10.601  < 2e-16 ***
+DistrictSIAYA          3.794e+00  1.522e-01  24.924  < 2e-16 ***
+DistrictSUBA           2.359e+00  1.543e-01  15.288  < 2e-16 ***
+DistrictTAITA TAVETA  -1.440e+01  1.294e+02  -0.111 0.911381    
+DistrictTANA RIVER    -6.506e-01  1.361e-01  -4.779 1.76e-06 ***
+DistrictTESO           3.564e+00  1.664e-01  21.412  < 2e-16 ***
+DistrictTHARAKA       -1.436e+01  2.046e+02  -0.070 0.944053    
+DistrictTHIKA         -1.407e+01  2.162e+02  -0.065 0.948135    
+DistrictTRANS NZOIA    4.289e-01  3.199e-01   1.341 0.179944    
+DistrictUASIN GISHU    2.313e+00  1.595e-01  14.502  < 2e-16 ***
+DistrictVIHIGA         1.884e+00  2.059e-01   9.150  < 2e-16 ***
+DistrictWEST POKOT     8.320e-01  1.381e-01   6.025 1.69e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 105103  on 98556  degrees of freedom
+Residual deviance:  85228  on 98501  degrees of freedom
+AIC: 85340
+
+Number of Fisher Scoring iterations: 16</code></pre>
+
+
+        <h2 id="pagerank">PageRank</h2>
+          <p>
+            We aimed to define the pagerank of a district as follows: A high pagerank indicates a district with high malaria prevalence that also has high traffice to districts with low malaria prevalence.
+
+            These districts are deemed "trouble spots" because they have the potential to spread malaria quickly.
+          </p>
+
+        <h3 id="pagerank-ratio">PageRank: Ratio</h3>
+          <p>
+            The following chart displays the pageranks of each district for the month of December using the ratio weighting scheme. The weight of an edge from A to B is (mobility from B to A) * (prevalence in B / prevalence in A).
+          </p>
+          <p>
+            <img src="images/pagerank_ratio_dec.png">
+          </p>
+          <p>
+            The the top 5 pageranks based on the ratio weighting scheme are:
+            <ol>
+              <li>Kisumu</li>
+              <li>Busia</li>
+              <li>Siaya</li>
+              <li>Bungoma</li>
+              <li>Mombasa</li>
+            </ol>
+          </p>
+
+
+        <h3 id="pagerank-difference">PageRank: Difference</h3>
+          <p>
+            The following chart displays the pageranks of each district for the month of December using the difference weighting scheme. The weight of an edge from A to B is (mobility from B to A) * (prevalence in B - prevalence in A).
+          </p>
+          <p>
+            <img src="images/pagerank_difference_dec.png">
+          </p>
+          <p>
+            The the top 5 pageranks based on the difference weighting scheme are:
+            <ol>
+              <li>Kisumu</li>
+              <li>Siaya</li>
+              <li>Nyando</li>
+              <li>Butere/Mumias</li>
+              <li>Busia</li>
+            </ol>
+          </p>
 
 <pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
 $ git checkout gh-pages
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3 id="part-a">
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
       </section>
+
       <footer>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p><small>&copy; Amy Chen, David Ma, Mark Martinez - 2013</small></p>
       </footer>
-    </div>
+
+    </div> <!-- end div.wrapper -->
     <script src="javascripts/scale.fix.js"></script>
     
   </body>
