@@ -52,11 +52,23 @@
 
       <section>
         <h2 id="introduction">Introduction</h2>
+        <p>
+          Malaria is an infectious disease that presents a massive public health problem in tropical areas of the world, particularly in sub-Saharan Africa. As malaria is a preventable disease (e.g. using bednets to prevent mosquito bites) and a treatable disease, there are many policies being implemented to control malaria <a href="http://www.who.int/heli/risks/vectors/malariacontrol/en/">WHO on malaria control</a>. As such, it is important to figure out where, when, and how to best target these such policies. Perhaps most simply, it would make sense to target malaria control programs in places where malaria is most prevalent. 
+        </p>
+        <p>
+          However, this does not take into account the spread of malaria across space due to human movement: as people move from one place to another, they can also import malaria from one place to another. For example, a place that has a high malaria prevalence due to environmental factors that are favorable to the malaria parasite but is rather isolated in terms of human travel would suggest a very different control policy from a place where the environmental factors might not be as favorable to malaria parasites, but receives a lot of incoming travel from high-prevalence places and hence has a lot of imported malaria. A recent study incorporated detailed migration patterns (from cell phone data) with malaria prevalence to characterize malaria transmission “source” and “sink” regions in Kenya <a href="http://www.sciencemag.org/content/338/6104/267.long">Wesolowski 2012</a>. 
+        </p>
+        <p>
+          However, while it is widely acknowledged to be significant, the specific dependence of malaria upon seasonality is not well-defined <a href="http://www.malariajournal.com/content/8/1/276">seasonality paper</a>; the best estimates of malaria prevalence represent the maximum prevalence during the year <a href="http://www.map.ox.ac.uk/browse-resources/endemicity/Pf_mean/KEN/">MAP: Malaria Atlas Project</a>. As the study depended on this static estimate of malaria prevalence, it did not characterize how malaria transmission may also vary over seasons. In our project, we combine geotagged monthly weather data with malaria survey data to come up with estimates for malaria prevalence for each month. We then incorporate mobility data by month and perform network analysis to come up with several ways of combining malaria prevalence and mobility information to characterize and rank districts.
+        </p>
 
         <h2 id="data">Data</h2>
           <h3 id="data-raw">Data: Raw</h3>
           <p>
             We began the project with the following datasets:
+
+            District boundary data (raw/district_shape_data/ke_district.shp) was also obtained via personal communication with Amy Wesolowski. These correspond to the 69 districts under the 1999 Constitution of Kenya, which were the same districts used to define the mobility data. The file ke_district.shp encodes the spatial shape and location of the 69 districts (as ArcGIS polygons) as well as an attribute table that lists several characteristics for each district (including name and populuation from a census).
+
             <ul>
               <li><strong>data.csv -</strong> Weather data. Used variables include <em>Temperature, Precipitation, Months Since Dec 2008, Long, Lat</em></li>
               <li><strong>pr_2013-11-18.csv -</strong> Malaria prevalence data based on surveys in Kenya. Used variables include <em>latitude, longitude, month start, month end, pf pos, examined</em></li>
@@ -66,7 +78,19 @@
             </ul>
           </p>
           <p>
+            weather_data.csv was obtained via personal communication with Professor Caroline Buckee (HSPH); its original source is from NASA’s MERRA project which uses historic satellite imagery to provide weather estimates <a href="http://gmao.gsfc.nasa.gov/research/merra/">MERRA project</a>. The data we used consists of precipitation (in kg/(m^2 s), or flux in terms of mass per area per time) and temperature (K). Data points are on a lattice of .67° longitude by .5° latitude for every month January 2009-December 2011. Apart from a few select number of major cities, other historical weather data for the entirety of Kenya is not readily available online.
+
             <img src="images/avg_temperature.png">
+          </p>
+
+          <p>
+            The Precipitation column in our dataset did not vary from month-to-month. It only varied across locations. While this is a limitation, we definitely believe it to be better than no precipitation.
+
+            <img src="images/avg_precipitation.png">
+          </p>
+
+          <p>
+            <img src="images/kenya_precipitation.png">
           </p>
 
           <h3 id="data-clean">Data: Clean</h3>
@@ -94,6 +118,20 @@
               <img src="images/examined_per_district.png">
             </p>
 
+            <p>
+              Malaria prevalence data was obtained from the Malaria Atlas Project (MAP). While MAP has many detailed estimates related to malaria prevalence in Kenya, these are all static in time. However, their raw data, which consists of geotagged malaria surveys, do have month and year identified. This data is publicly available online at http://www.map.ox.ac.uk/explorer/.
+            </p>
+
+
+            <p>
+              We recognized that it would not be prudent to keep every district in Kenya for our analysis due to the sparsity of data in some of the regions. These are also districts with low population. We removed 15 districts to go from 69 to 54 total districts.
+            </p>
+            <p>
+              In the map below, each dot shows a survey from the Malaria Prevalence dataset. The color of each dot is proportional on the scale of white to red with the prevalence rate found from that survey. The 54 districts outlined in dark red are the ones we decided to keep in our final analysis.
+            </p>
+            <p>
+              <img src="images/kept_districts.png">
+            </p>
             <!-- <img src="images/Single_Month_Studies.png"> -->
             <!-- <img src="images/Single_Month_Studies.png"> -->
             <!-- <img src="images/Single_Month_Study_All_Districts.png"> -->
@@ -103,6 +141,12 @@
 
         <h2 id="regression">Regression</h2>
         <h3 id="regression-model">Regression: Model</h3>
+        <p>
+          In order to impute missing data as well as describe an associative relationship between *Precipitation*, *Temperature*, and *Malaria Prevalence*, we turned toward regression models. We immediately struck the possibility of using a multiple linear regression due to the fact that *Malaria Prevalence* is measured as a percentage. Thus, a linear model runs the risk of outputting predicted probabilities of less than 0 or greater than 1, which would hinder further analysis.
+
+          Instead, we decided to use the Expanded Combined Data from above to fit a logit regression model. In a logit regression, the dependent variable is binary. In our original Combined Data, we only have aggregated *Malaria Prevalence*. Thus, by expanding our survey dataset into individuals, we are able to use the *Positive* column as the dependent variable.
+        </p>
+
         <h3 id="regression-results">Regression: Results</h3>
 <pre><code>> summary(mylogit)
 
@@ -182,7 +226,13 @@ Residual deviance:  85228  on 98501  degrees of freedom
 AIC: 85340
 
 Number of Fisher Scoring iterations: 16</code></pre>
+        <p>
+          Many variables in our model are statistically significant at the 0.1% significance level, including both *Precipitation* and *Temperature*.
 
+          We obtain a pseudo-$R^2$ of $R^2_L = \frac{D_{null} - D_{model}}{D_{null}} = \frac{105103-85228}{105103} = 0.189$. 
+
+          While this value is not particularly high, we believe that incorporating the results of the logistic regression will improve our final prevalence matrix, as the regression incorporates weather whereas the alternative is to use the raw Positive/Examined numbers. Our regression also makes it possible to impute missing data for districts with no surveys in particular months.
+        </p>
 
         <h2 id="pagerank">PageRank</h2>
           <p>
@@ -222,11 +272,82 @@ Number of Fisher Scoring iterations: 16</code></pre>
             <ol>
               <li>Kisumu</li>
               <li>Siaya</li>
-              <li>Nyando</li>
-              <li>Butere/Mumias</li>
               <li>Busia</li>
+              <li>Nyando</li>
+              <li>Bungoma</li>
             </ol>
           </p>
+
+
+        <h3 id="pagerank-difference">PageRank: Mobility</h3>
+          <p>
+            The following chart displays the pageranks of each district for the month of December using the mobility weighting scheme. The weight of an edge from A to B is (mobility from B to A).
+          </p>
+          <p>
+            <img src="images/pagerank_mobility_dec.png">
+          </p>
+          <p>
+            The the top 5 pageranks based on the difference weighting scheme are:
+            <ol>
+              <li>Nairobi</li>
+              <li>Thika</li>
+              <li>Kiambu</li>
+              <li>Uasin Gishu</li>
+              <li>Mombasa</li>
+            </ol>
+          </p>
+
+        <h2 id="network">Network Analysis</h2>
+          <p>
+            For our analysis, we decided to perform network analysis using districts in Kenya as the nodes. The goal is to perform a PageRank analysis on the resulting network graph.
+
+            In our context, the core idea behind the PageRank algorithm is:
+
+            1. A highly ranked district has high malaria prevalence, and has high outgoing mobility to districts with low malaria prevalence
+            2. Mobility from a highly ranked district is more nefarious than mobility from a lowly ranked district
+
+            The PageRank algorithm assigns scores to nodes in a graph based on how many neighbors a node has, as well as the score of those neighbors.
+          </p>
+          <h3>Graphs</h3>
+          <p>
+            **Weighting Schemes**
+
+            We opted to implement three separate weighting schemes for the edges for comparison.
+
+            1. The **'difference'** weighting scheme sets edge weight from A to B as the mobility from A to B multiplied by the difference in prevalence between A and B plus 0.5. We add 0.5 in order to weigh the prevalence differences slightly less and the mobility data slightly more. This also avoids negative edge weights, which interfere with our visualizations later on.
+
+            2. The **'ratio'** weighting scheme sets edge weight from A to B as the mobility from A to B multiplied by the ratio in prevalence of A over B.
+
+            3. The **'mobility'** weighting scheme sets edge weight from A to B as the unweighted mobility from A to B.
+
+            The edges are then added in the direction of B to A so that A has a higher pagerank as its weighted mobility.
+          </p>
+
+        <h2>Visualizations</h2>
+          <video width="640" height="480" controls>
+            <source src="videos/RatioGif.mp4" type="video/mp4">
+            <object data="movie.mp4" width="640" height="480">
+              <embed src="movie.swf" width="640" height="480">
+            </object> 
+          </video>
+          <video width="640" height="480" controls>
+            <source src="videos/DiffUpdatedGif.mp4" type="video/mp4">
+            <object data="movie.mp4" width="640" height="480">
+              <embed src="movie.swf" width="640" height="480">
+            </object> 
+          </video>
+          <video width="640" height="480" controls>
+            <source src="videos/MobileGif.mp4" type="video/mp4">
+            <object data="movie.mp4" width="640" height="480">
+              <embed src="movie.swf" width="640" height="480">
+            </object> 
+          </video>
+          <video width="640" height="480" controls>
+            <source src="videos/MatchBabyGif.mp4" type="video/mp4">
+            <object data="movie.mp4" width="640" height="480">
+              <embed src="movie.swf" width="640" height="480">
+            </object> 
+          </video>
 
         <h1>Appendix</h1>
 
