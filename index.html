@@ -43,7 +43,9 @@
           <iframe width="640" height="480" src="//www.youtube.com/embed/trvbEWvOj6M?rel=0" frameborder="0" allowfullscreen></iframe>
         </p>
 
-
+        <p>
+          <a href="http://youtu.be/trvbEWvOj6M">YouTube Video</a>
+        </p>
 
 
           <p>
@@ -325,21 +327,29 @@ Number of Fisher Scoring iterations: 16</code></pre>
           </video>
           <p>
             Next, we combined mobility data with our regressed malaria prevalence data.
-
+          </p>
+          <p>
             The mobility data gives counts of people moving from one district to another for the months between June 2008 and June 2009. This lends itself naturally to network analysis, with districts as nodes and edges weighted by mobility.
-
+          </p>
+          <p>
             However, as we’re not just trying model human mobility but rather mobility of malaria with humans, we also weighted edges by a measure characterizing the difference in malaria prevalence between districts.
-
+          </p>
+          <p>
             We tried several different ways of weighting edges by malaria prevalence differences, and ran the PageRank algorithm on the networks produced. Effectively, the PageRank algorithm ranks districts which have both relatively high malaria prevalence and lots of outwards mobility, particularly to other “important” districts, the highest.
-
+          </p>
+          <p>
             So, PageRank provides one way of characterizing which districts are potentia hotspots for malaria intervention both because of their prevalence and their transmission through mobility. We found that our different ways of weighting malaria prevalence each put varying emphasis on mobility versus prevalence, as far as ranking the districts goes, but overall seemed to combine these two measures in an informative way
-
+          </p>
+          <p>
             For example, while Busia has higher prevalence than Kisumu, our PageRanks put Kisumu higher because it is a major city with lots of mobility while Busia is not. Conversely, Nairobi is the biggest city in Kenya, but has rather low malaria prevalence, and so our PageRanks do not put Nairobi up top.
-
+          </p>
+          <p>
             We did not find much variability by month in our PageRanks. This is because relative mobility of districts does not vary much across months, and our regressed malaria prevalence also does not vary much across months, largely due to the overall scarcity of longitudinal data for every district in the malaria survey data.
-
+          </p>
+          <p>
             However, our PageRank model for a given month does give a promising characterization of the importance of districts by both malaria prevalence and mobility, answering the question of where one might target malaria interventions, and how important controlling imported transmission versus endemic prevalence might be.
-
+          </p>
+          <p>
             With more longitudinal data, we could incorporate more temporal dynamics into our model and thus also answer the question of when to target these interventions.
           </p>
 
