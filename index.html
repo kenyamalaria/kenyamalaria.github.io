@@ -31,14 +31,21 @@
               <p class="view">
                 <a href="#visualizations">Visualizations</a>
               </p>
-            <h4>Appendix</h4>
+ <!--            <h4>Appendix</h4>
               <p class="view">
                 <a href="#arcgis">ArcGIS</a>
-              </p>
+              </p> -->
       </header>
 
       <section>
         <h2 id="introduction">Introduction</h2>
+        <p>
+          <iframe width="640" height="480" src="//www.youtube.com/embed/trvbEWvOj6M?rel=0" frameborder="0" allowfullscreen></iframe>
+        </p>
+
+
+
+
           <p>
             Malaria is an infectious disease that presents a massive public health problem in tropical areas of the world, particularly in sub-Saharan Africa. As malaria is a preventable disease (e.g. using bednets to prevent mosquito bites) and a treatable disease, there are many policies being implemented to control malaria <a href="http://www.who.int/heli/risks/vectors/malariacontrol/en/">WHO on malaria control</a>. As such, it is important to figure out where, when, and how to best target these such policies. Perhaps most simply, it would make sense to target malaria control programs in places where malaria is most prevalent. 
           </p>
@@ -316,8 +323,27 @@ Number of Fisher Scoring iterations: 16</code></pre>
               <embed src="movie.swf" width="640" height="480">
             </object> 
           </video>
+          <p>
+            Next, we combined mobility data with our regressed malaria prevalence data.
 
-        <h2>Appendix</h2>
+            The mobility data gives counts of people moving from one district to another for the months between June 2008 and June 2009. This lends itself naturally to network analysis, with districts as nodes and edges weighted by mobility.
+
+            However, as we’re not just trying model human mobility but rather mobility of malaria with humans, we also weighted edges by a measure characterizing the difference in malaria prevalence between districts.
+
+            We tried several different ways of weighting edges by malaria prevalence differences, and ran the PageRank algorithm on the networks produced. Effectively, the PageRank algorithm ranks districts which have both relatively high malaria prevalence and lots of outwards mobility, particularly to other “important” districts, the highest.
+
+            So, PageRank provides one way of characterizing which districts are potentia hotspots for malaria intervention both because of their prevalence and their transmission through mobility. We found that our different ways of weighting malaria prevalence each put varying emphasis on mobility versus prevalence, as far as ranking the districts goes, but overall seemed to combine these two measures in an informative way
+
+            For example, while Busia has higher prevalence than Kisumu, our PageRanks put Kisumu higher because it is a major city with lots of mobility while Busia is not. Conversely, Nairobi is the biggest city in Kenya, but has rather low malaria prevalence, and so our PageRanks do not put Nairobi up top.
+
+            We did not find much variability by month in our PageRanks. This is because relative mobility of districts does not vary much across months, and our regressed malaria prevalence also does not vary much across months, largely due to the overall scarcity of longitudinal data for every district in the malaria survey data.
+
+            However, our PageRank model for a given month does give a promising characterization of the importance of districts by both malaria prevalence and mobility, answering the question of where one might target malaria interventions, and how important controlling imported transmission versus endemic prevalence might be.
+
+            With more longitudinal data, we could incorporate more temporal dynamics into our model and thus also answer the question of when to target these interventions.
+          </p>
+
+       <!--  <h2>Appendix</h2>
 
         <h3 id="arcgis">ArcGIS</h3>
           <img src="images/ArcGIS_screenshots/AddData.png">
@@ -328,7 +354,7 @@ Number of Fisher Scoring iterations: 16</code></pre>
           <img src="images/ArcGIS_screenshots/SpatialJoinMean.png">
           <img src="images/ArcGIS_screenshots/OpenAttributeTable.png">
           <img src="images/ArcGIS_screenshots/ExportAttributeTable.png">
-
+ -->
       </section>
 
       <footer>
